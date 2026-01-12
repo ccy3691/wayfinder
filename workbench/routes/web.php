@@ -12,6 +12,7 @@ use App\Http\Controllers\ModelBindingController;
 use App\Http\Controllers\NamedInvokableController;
 use App\Http\Controllers\Nested\NestedController;
 use App\Http\Controllers\OptionalController;
+use App\Http\Controllers\PaginatedController;
 use App\Http\Controllers\ParameterNameController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\TwoRoutesSameActionController;
@@ -98,3 +99,9 @@ Route::get('/inertia/unsafe', [InertiaController::class, 'unsafe'])->name('inert
 
 Route::get('/api/status', [ApiController::class, 'status'])->name('api.status');
 Route::get('/api/users', [ApiController::class, 'users'])->name('api.users');
+
+Route::get('/pagination', [PaginatedController::class, 'pagination']);
+Route::get('/simple-pagination', [PaginatedController::class, 'simplePagination']);
+Route::get('/relation-pagination', [PaginatedController::class, 'relationPagination']);
+Route::get('/relational-pagination', [PaginatedController::class, 'relationalPagination']);
+Route::get('/chained-relation-pagination', [PaginatedController::class, 'chainedRelationPagination']);

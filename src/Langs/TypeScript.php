@@ -211,6 +211,76 @@ class TypeScript
         return $object;
     }
 
+    public static function ensureLengthAwarePaginatorType(): void
+    {
+        $namespacedKey = 'Illuminate.Pagination.LengthAwarePaginator';
+
+        if (isset(self::$namespaced[$namespacedKey])) {
+            return;
+        }
+
+        $paginator = self::type(
+            'LengthAwarePaginator<T>',
+            self::objectToTypeObject(
+                [
+                    'current_page' => 'number',
+                    'data' => 'T[]',
+                    'first_page_url' => 'string',
+                    'from' => 'number | null',
+                    'last_page' => 'number',
+                    'last_page_url' => 'string',
+                    'links' => 'Array<{ url: string | null, label: string, active: boolean }>',
+                    'next_page_url' => 'string | null',
+                    'path' => 'string',
+                    'per_page' => 'number',
+                    'prev_page_url' => 'string | null',
+                    'to' => 'number | null',
+                    'total' => 'number',
+                ],
+                false,
+            ),
+        )
+        ->referenceClass(
+            '\\Illuminate\\Pagination\\LengthAwarePaginator',
+            base_path('vendor/laravel/framework/src/Illuminate/Pagination/LengthAwarePaginator.php'),
+        )
+        ->export();
+
+        self::addFqnToNamespaced($namespacedKey, $paginator);
+    }
+
+    public static function ensureSimplePaginatorType(): void
+    {
+        $namespacedKey = 'Illuminate.Contracts.Pagination.Paginator';
+
+        if (isset(self::$namespaced[$namespacedKey])) {
+            return;
+        }
+
+        $paginator = self::type(
+            'Paginator<T>',
+            self::objectToTypeObject(
+                [
+                    'current_page' => 'number',
+                    'data' => 'T[]',
+                    'first_page_url' => 'string',
+                    'path' => 'string',
+                    'per_page' => 'number',
+                    'next_page_url' => 'string | null',
+                    'prev_page_url' => 'string | null',
+                ],
+                false,
+            ),
+        )
+            ->referenceClass(
+                '\\Illuminate\\Contracts\\Pagination\\Paginator',
+                base_path('vendor/laravel/framework/src/Illuminate/Contracts/Pagination/Paginator.php'),
+            )
+            ->export();
+
+        self::addFqnToNamespaced($namespacedKey, $paginator);
+    }
+
     public static function object(): ObjectBuilder
     {
         return new ObjectBuilder;
